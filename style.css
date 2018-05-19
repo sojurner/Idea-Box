@@ -1,0 +1,79 @@
+body {
+width: 100%;
+margin: 0;
+padding: 0;
+text-align: center;
+font-family: "Open Sans";
+}
+
+.information-section, .input-section {
+  left: 0;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  float: none;
+}
+
+.input-section {
+  height: 40%;
+  background-color: #e5f3f2;
+  top: 0;
+  padding: 0 0 2rem 0;
+
+}
+.information-section {
+  height: 60%;
+  bottom: 0;
+}
+
+h1{
+  margin: 2rem 1rem;
+  font-family: 'Roboto Slab', serif;
+  display: inline-block;
+  font-size: 4rem;
+}
+
+.idea-box-title {
+  color: #00A79D;
+}
+
+.box-title {
+  color: #6D6E71;
+}
+
+.title-input-box, .body-input-box {
+  text-align: left;
+  display: block;
+  margin: auto;
+  height: 2.5rem;
+  width: 40rem;
+}
+
+input::-webkit-input-placeholder {
+  font-size: 25px;
+  padding: 10px 0 0 .4rem;
+  color: #B5B6B8;
+}
+
+input[type="text"] {
+  font-size: 20px;
+  padding: 0 0 0 .5rem;
+}
+
+.body-box {
+
+}
+
+.save-button {
+  background-color: #00A79D;
+  height: 2.8rem;
+  margin: 1.5rem 0 0 0;
+  width: 40.7rem;
+  font-size: 20px;
+}
+
+.search-input-box {
+  height: 2.5rem;
+  width: 40rem;
+  margin: 4rem 0 0 0;
+  }
