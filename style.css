@@ -49,6 +49,12 @@ h1{
   width: 40rem;
 }
 
+.search-input-box {
+  height: 2.5rem;
+  width: 40rem;
+  margin: 4rem 0 0 0;
+  }
+  
 input::-webkit-input-placeholder {
   font-size: 25px;
   padding: 10px 0 0 .4rem;
@@ -60,10 +66,6 @@ input[type="text"] {
   padding: 0 0 0 .5rem;
 }
 
-.body-box {
-
-}
-
 .save-button {
   background-color: #00A79D;
   height: 2.8rem;
@@ -71,9 +73,3 @@ input[type="text"] {
   width: 40.7rem;
   font-size: 20px;
 }
-
-.search-input-box {
-  height: 2.5rem;
-  width: 40rem;
-  margin: 4rem 0 0 0;
-  }
