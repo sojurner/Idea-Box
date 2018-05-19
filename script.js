@@ -44,10 +44,10 @@ function downRateIdeaBox() {
   if (qualityRating.value = 'genius') {
     qualityRating.innerText = 'plausible'
   }
-  else if (qualityRating.value = 'plausible') {
+  if (qualityRating.value = 'plausible') {
     qualityRating.innerText = 'swill'
   }
-  else if (qualityRating.value = 'swill') {
+  if (qualityRating.value = 'swill') {
     qualityRating.innerText = 'swill';
   }
 }
