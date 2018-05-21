@@ -28,14 +28,14 @@ function generateNewIdea(event) {
 }
 
 //how to link this function to constructor function  
-function prependCard() {
+function prependCard(object) {
    var ideaCard =
-  `<article class="idea-box-card" id=${newCard.id});
-    <h2 contenteditable="true">${newCard.title}<span><button class="delete-button"></button></span></h2>
-    <p contenteditable="true">${newCard.body}</p>
+  `<article class="idea-box-card" id=${object.id});
+    <h2 contenteditable="true">${object.title}<span><button class="delete-button"></button></span></h2>
+    <p contenteditable="true">${object.body}</p>
     <button id="upvote" class="up-arrow-button"></button>
     <button id="downvote" class="down-arrow-button"></button>
-    <p class="quality-title">quality: <p class="quality-rating">${newCard.quality}</p></p>
+    <p class="quality-title">quality: <p class="quality-rating">${object.quality}</p></p>
     <hr>
     </article>`;
     infoSection.prepend(ideaCard);
@@ -43,7 +43,7 @@ function prependCard() {
 
 // DO we Need .text?
 infoSection.on('click', '.up-arrow-button', function() {
-  var upToRating = $(this).parents('.idea-box-card').find('.quality-rating');
+  var upToRating = $(this).closest('.idea-box-card').find('.quality-rating');
   // var id = $(this).closest('.idea-box-card')[0].id;
   // upratingStore(id, qualityRating.text()) 
   if (upToRating.text() === 'swill') {
@@ -54,9 +54,8 @@ infoSection.on('click', '.up-arrow-button', function() {
   console.log('hello')
 })
 
-
 infoSection.on('click', '.down-arrow-button', function() {
-  var downToRating = $(this).parents('.idea-box-card').find('.quality-rating'); 
+  var downToRating = $(this).closest('.idea-box-card').find('.quality-rating'); 
   // var id = $(this).closest('.idea-box-card')[0].id
   // downRatingStore(id, qualityRating.text())
   if (downToRating.text() === 'genius') {  
@@ -66,6 +65,12 @@ infoSection.on('click', '.down-arrow-button', function() {
   }
 })
 
+infoSection.on('click', '.delete-button', function() {
+  if ($(this).hasClass('delete-button')) {
+    $(this).parents('.idea-box-card').remove();
+  }
+})
 
 
+ // if ($(this).hasClass() === 'delete-button') 
 
