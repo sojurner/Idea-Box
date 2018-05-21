@@ -4,15 +4,10 @@ var saveButton = $('.save-button');
 var searchInput = $('#search-input-box');
 var infoSection = $('.information-section');
 var titleBodyForm = $('.title-body-form');
-var arrowUp = $('.up-arrow-button');
-var arrowDown = $('.down-arrow-button');
 var qualityRating = $('.quality-rating');
-var IdeaArray = [];
+var ideaArray = [];
 
 saveButton.on('click', generateNewIdea);
-arrowUp.on('click', ideaEvaluation)
-titleBodyForm.on('submit', newIdeaBox);
-arrowDown.on('click', downRateIdeaBox);
 // infoSection.on('keyup', 'h2, p', function)
 // searchInput.addEventListener('input', searchFilter;)
 
@@ -40,39 +35,37 @@ function prependCard() {
     <p contenteditable="true">${newCard.body}</p>
     <button id="upvote" class="up-arrow-button"></button>
     <button id="downvote" class="down-arrow-button"></button>
-    <p class="quality-title">quality: <p class="quality-rating">${newCard.rating}</p></p>
+    <p class="quality-title">quality: <p class="quality-rating">${newCard.quality}</p></p>
     <hr>
     </article>`;
     infoSection.prepend(ideaCard);
 }
 
 // DO we Need .text?
-// function ideaEvaluation() {
-// var arrowLink = $(this).attr('class');
-// var parentLink = 
-// ideaRating.indexOf()
-//   captureDown = 
-// if (quality === 'swill') {
-//     quality.text('plausible')
-//   } else if (quality === 'plausible' || quality === 'genius') {
-//     quality.text('genius');
-// }
+infoSection.on('click', '.up-arrow-button', function() {
+  var upToRating = $(this).parents('.idea-box-card').find('.quality-rating');
+  // var id = $(this).closest('.idea-box-card')[0].id;
+  // upratingStore(id, qualityRating.text()) 
+  if (upToRating.text() === 'swill') {
+    upToRating.text('plausible');
+  } else if (upToRating.text() === 'plausible') {
+    upToRating.text('genius');
+  }
+  console.log('hello')
+})
 
-// idea-box-card.prototype.downVote = function() {
-//   var quality = this.quality; 
-//   if (quality === 'genius') {  
-//     this.quality.text = 'plausible';
-//   } else if (quality === 'plausible' || quality === 'swill') {
-//     this.quality = 'swill';
-//   }
-// }
-// function ideaEvaluation () {
-//   var cardID = $(this).closest('.idea-box-card').attr('id');
-//   var qualityEdit = cardID.find('.quality-rating');
-//   if(.cardID === 'upVote') {
-// }
 
-// storage
+infoSection.on('click', '.down-arrow-button', function() {
+  var downToRating = $(this).parents('.idea-box-card').find('.quality-rating'); 
+  // var id = $(this).closest('.idea-box-card')[0].id
+  // downRatingStore(id, qualityRating.text())
+  if (downToRating.text() === 'genius') {  
+    downToRating.text('plausible');
+  } else if (downToRating.text() === 'plausible') {
+    downToRating.text('swill');
+  }
+})
+
 
 
 
