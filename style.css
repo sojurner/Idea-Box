@@ -55,7 +55,7 @@ h1{
 #search-input-box {
   height: 2.5rem;
   width: 40rem;
-  margin: 4.5rem 0 0 0;
+  margin: auto;
   }
   
 input::-webkit-input-placeholder {
@@ -73,7 +73,7 @@ input[type="text"] {
   background-color: #00A79D;
   height: 2.8rem;
   margin: 1.5rem 0 0 .3rem;
-  width: 40.7rem;
+  width: 40.9rem;
   font-size: 20px;
   white-space: pre;
 }
@@ -83,6 +83,7 @@ input[type="text"] {
   height: 10.5rem;
   width: 40rem;
   margin: auto;
+
 }
 
 h2 {
