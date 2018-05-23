@@ -13,13 +13,13 @@ function Idea(title, body, id, quality) {
   this.title = title;
   this.body = body;
   this.id = id;
-  this.quality = quality;
+  this.quality = quality || 'swill';
 }
 
 saveButton.on('click', function(event) {
   event.preventDefault();
   var id = Date.now();  
-  var newCard = new Idea(titleInput.val(), bodyInput.val(), id, 'swill');
+  var newCard = new Idea(titleInput.val(), bodyInput.val(), id, null);
   localStorage.setItem(id, JSON.stringify(newCard));
   prependCard(newCard);
 });
@@ -31,10 +31,13 @@ infoSection.on('click', '.up-arrow-button', function() {
   } else if (upToRating.text() === 'plausible') {
     upToRating.text('genius');
   }
-  var setObject = localStorage.setItem(quality, upToRating.text);
-  var getObject = localStorage.getItem(quality)
-  var parseGetObject = JSON.parse(getObject);
-  var stringifyData = JSON.stringify(parseGetObject);
+  var id = $(this).closest('article').attr('id')
+  var getObject = localStorage.getItem(id);
+  var parseObject = JSON.parse(getObject);
+  var updateRating = upToRating.text();
+  parseObject.quality = updateRating;
+  var stringifyData = JSON.stringify(parseObject);
+  var setObject = localStorage.setItem(id, stringifyData);
   ///how to 
 });
 
@@ -45,17 +48,20 @@ infoSection.on('click', '.down-arrow-button', function() {
   } else if (downToRating.text() === 'plausible') {
     downToRating.text('swill');
   }
-  var getObject = localStorage.getItem(downToRating);
-  var parseGetObject = JSON.parse(getObject);
-  // var stringifyData = JSON.stringify(parseGetObject)
-  // localStorage.setItem(downToRating, parseGetObject);
+  var id = $(this).closest('article').attr('id')
+  var getObject = localStorage.getItem(id);
+  var parseObject = JSON.parse(getObject);
+  var updateRating = downToRating.text();
+  parseObject.quality = updateRating;
+  var stringifyData = JSON.stringify(parseObject);
+  var setObject = localStorage.setItem(id, stringifyData);
 });
 
 infoSection.on('click', '.delete-button', function() {
   if ($(this).hasClass('delete-button')) {
     $(this).parents('.idea-box-card').remove();
   }
-  localStorage.removeItem($(this).parents('.idea-box-card').attr('id'))
+  localStorage.removeItem($(this).parents('.idea-box-card').attr('id'));
 });
 
 searchInput.on('keyup', function(event) {
@@ -69,6 +75,7 @@ searchInput.on('keyup', function(event) {
   $('h2:contains(' + search + ')').closest('.idea-box-card').show();
   $('h2:not(:contains(' + search + '))').closest('.idea-box-card').hide();
   $('p:contains(' + search + ')').closest('.idea-box-card').show();
+  $('p:not(:contains(' + search + ')').closest('.idea-box-card').hide();
 });
 
 function prependCard(object) {
@@ -99,24 +106,27 @@ function persistFromStorage() {
 }
 
 infoSection.on('blur', '.card-title', function() {
-  var id = this.closest('article').getAttribute('id')
-  var newTitle = $(this).text();
-  var retrieveObject = localStorage.getItem(id)
+  var id = $(this).closest('article').attr('id')
+  var retrieveObject = localStorage.getItem(id);
   var parsedObject = JSON.parse(retrieveObject);
+  var newTitle = $(this).text();
   parsedObject.title = newTitle;
-  prependCard(parsedObject.title);
+  var stringifyObject = JSON.stringify(parsedObject)
+  var updateLocalStorage = localStorage.setItem(id, stringifyObject);
 //------
 })
 
-// infoSection.on('blur', '.idea-content', function() {
-//   var id = $(this).closest('article').getAttribute('id')
-//   var newBody = $(this).text();
-//   var retrieveObject = localStorage.getItem(id)
-//   var parsedObject = JSON.parse(retrieveObject);
-//   parsedObject.body = newTitle;
-//   prependCard(parsedObject.body)
-// //------
-// })
+infoSection.on('blur', '.idea-content', function() {
+  var id = $(this).closest('article').attr('id')
+  var retrieveObject = localStorage.getItem(id);
+  var parsedObject = JSON.parse(retrieveObject);
+  var newBody = $(this).text();
+  parsedObject.body = newBody;
+  var stringifyObject = JSON.stringify(parsedObject)
+  var updateLocalStorage = localStorage.setItem(id, stringifyObject);
+//------
+})
+
 
 
 
