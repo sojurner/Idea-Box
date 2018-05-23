@@ -8,7 +8,6 @@ font-family: "Open Sans";
 
 .information-section, .input-section {
   left: 0;
-  position: fixed;
   right: 0;
   width: 100%;
   float: none;
@@ -24,7 +23,7 @@ font-family: "Open Sans";
 
 }
 .information-section {
-  height: 60%;
+  height: 50%;
   bottom: 0;
   overflow: auto;
 }
@@ -55,7 +54,8 @@ h1{
 #search-input-box {
   height: 2.5rem;
   width: 40rem;
-  margin: auto;
+  margin-top: 3rem;
+  margin-left: 9rem;
   }
   
 input::-webkit-input-placeholder {
