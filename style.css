@@ -56,6 +56,7 @@ h1{
   width: 40rem;
   margin-top: 3rem;
   margin-left: 9rem;
+  margin: auto;
   }
   
 input::-webkit-input-placeholder {
@@ -83,7 +84,6 @@ input[type="text"] {
   height: 10.5rem;
   width: 40rem;
   margin: auto;
-
 }
 
 h2 {
