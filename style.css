@@ -54,9 +54,7 @@ h1{
 #search-input-box {
   height: 2.5rem;
   width: 40rem;
-  margin-top: 3rem;
-  margin-left: 9rem;
-  margin: auto;
+  margin: 2rem auto;
   }
   
 input::-webkit-input-placeholder {
@@ -138,4 +136,17 @@ h2 {
 
 .down-arrow-button:hover {
   background: url('Images/downvote-hover.svg');
+}
+
+@media screen and (max-width: 750px) {
+  
+  #title-input-box,
+  #body-input-box,
+  .save-button {
+    width: 80vw;
+  }
+
+  #body-input-box {
+    height: 5.5rem;
+  }
 }
