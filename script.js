@@ -20,7 +20,7 @@ titleInput.on('input', function() {
   if ($(this) !== '') {
     saveButton.removeAttr('disabled')
   } 
-})
+});
 
 saveButton.on('click', function(event) {
   event.preventDefault();
@@ -132,14 +132,3 @@ searchInput.on('keyup', function() {
 searchInput.on('blur', function(event) {
   location.reload(event);
 });
-
-
-
-
-
-
-
-
-
-
-
