@@ -15,14 +15,13 @@
     <h1 class="idea-box-title">idea<span class="box-title">box</span></h1>
     <header>
     <form class="title-body-form">
-      <input type="text" name="Title" id="title-input-box" placeholder="Title" required>
-      <br>
-      <input type="text" name="Body" id="body-input-box" placeholder="Body" required>
-      <button type="submit" class="save-button">save</button>
+      <input type="text" name="Title" id="title-input-box" placeholder="Title" aria-label="Idea Title" required>
+      <input type="text" name="Body" id="body-input-box" placeholder="Body" aria-label=" Idea Body Content" required>
+      <button type="submit" class="save-button" aria-label="Submit Idea" disabled>save</button>
     </form>
   </section>
   <section class="information-section">
-    <input type="text" name="Search" id="search-input-box" placeholder="Search" required>
+    <input type="text" name="Search" id="search-input-box" placeholder="Search" aria-label="Search Idea Box" required>
   </section>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
