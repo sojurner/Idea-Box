@@ -94,10 +94,6 @@ input[type="text"] {
   background-color: #045E55;
 }
 
-.card-container {
-  overflow: auto;
-}
-
 .idea-box-card {
   height: 14.5rem;
   margin: 1rem auto;
