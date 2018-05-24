@@ -16,66 +16,18 @@ function Idea(title, body, id, quality) {
   this.quality = quality || 'swill';
 }
 
+titleInput.on('input', function() {
+  if ($(this) !== '') {
+    saveButton.removeAttr('disabled')
+  } 
+})
+
 saveButton.on('click', function(event) {
   event.preventDefault();
   var id = Date.now();  
   var newCard = new Idea(titleInput.val(), bodyInput.val(), id, null);
   localStorage.setItem(id, JSON.stringify(newCard));
   prependCard(newCard);
-});
-
-infoSection.on('click', '.up-arrow-button', function() {
-  var upToRating = $(this).closest('.idea-box-card').find('.quality-rating');
-  if (upToRating.text() === 'swill') {
-    upToRating.text('plausible');
-  } else if (upToRating.text() === 'plausible') {
-    upToRating.text('genius');
-  }
-  var id = $(this).closest('article').attr('id')
-  var getObject = localStorage.getItem(id);
-  var parseObject = JSON.parse(getObject);
-  var updateRating = upToRating.text();
-  parseObject.quality = updateRating;
-  var stringifyData = JSON.stringify(parseObject);
-  var setObject = localStorage.setItem(id, stringifyData);
-  ///how to 
-});
-
-infoSection.on('click', '.down-arrow-button', function() {
-  var downToRating = $(this).closest('.idea-box-card').find('.quality-rating'); 
-  if (downToRating.text() === 'genius') {  
-    downToRating.text('plausible');
-  } else if (downToRating.text() === 'plausible') {
-    downToRating.text('swill');
-  }
-  var id = $(this).closest('article').attr('id')
-  var getObject = localStorage.getItem(id);
-  var parseObject = JSON.parse(getObject);
-  var updateRating = downToRating.text();
-  parseObject.quality = updateRating;
-  var stringifyData = JSON.stringify(parseObject);
-  var setObject = localStorage.setItem(id, stringifyData);
-});
-
-infoSection.on('click', '.delete-button', function() {
-  if ($(this).hasClass('delete-button')) {
-    $(this).parents('.idea-box-card').remove();
-  }
-  localStorage.removeItem($(this).parents('.idea-box-card').attr('id'));
-});
-
-searchInput.on('keyup', function(event) {
-  event.preventDefault();
-  var search = $(this).val();
-  // $.extend($.expr[":"], {
-  //   "contains": function(elem, i, match, array) {
-  //     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-  //   }
-  // });
-  $('h2:contains(' + search + ')').closest('.idea-box-card').show();
-  $('h2:not(:contains(' + search + '))').closest('.idea-box-card').hide();
-  $('p:contains(' + search + ')').closest('.idea-box-card').show();
-  $('p:not(:contains(' + search + ')').closest('.idea-box-card').hide();
 });
 
 function prependCard(object) {
@@ -95,7 +47,7 @@ function prependCard(object) {
     <hr>
     </article>`;
   searchInput.after(ideaCard);
-}
+};
 
 function persistFromStorage() {
   for(var i = 0; i < localStorage.length; i++) {
@@ -105,6 +57,38 @@ function persistFromStorage() {
   }
 }
 
+infoSection.on('click', '.up-arrow-button', function() {
+  var upToRating = $(this).closest('.idea-box-card').find('.quality-rating');
+  if (upToRating.text() === 'swill') {
+    upToRating.text('plausible');
+  } else if (upToRating.text() === 'plausible') {
+    upToRating.text('genius');
+  }
+  var id = $(this).closest('article').attr('id')
+  var getObject = localStorage.getItem(id);
+  var parseObject = JSON.parse(getObject);
+  var updateRating = upToRating.text();
+  parseObject.quality = updateRating;
+  var stringifyData = JSON.stringify(parseObject);
+  var setObject = localStorage.setItem(id, stringifyData);
+});
+
+infoSection.on('click', '.down-arrow-button', function() {
+  var downToRating = $(this).closest('.idea-box-card').find('.quality-rating'); 
+  if (downToRating.text() === 'genius') {  
+    downToRating.text('plausible');
+  } else if (downToRating.text() === 'plausible') {
+    downToRating.text('swill');
+  }
+  var id = $(this).closest('article').attr('id')
+  var getObject = localStorage.getItem(id);
+  var parseObject = JSON.parse(getObject);
+  var updateRating = downToRating.text();
+  parseObject.quality = updateRating;
+  var stringifyData = JSON.stringify(parseObject);
+  var setObject = localStorage.setItem(id, stringifyData);
+});
+
 infoSection.on('blur', '.card-title', function() {
   var id = $(this).closest('article').attr('id')
   var retrieveObject = localStorage.getItem(id);
@@ -113,8 +97,7 @@ infoSection.on('blur', '.card-title', function() {
   parsedObject.title = newTitle;
   var stringifyObject = JSON.stringify(parsedObject)
   var updateLocalStorage = localStorage.setItem(id, stringifyObject);
-//------
-})
+});
 
 infoSection.on('blur', '.idea-content', function() {
   var id = $(this).closest('article').attr('id')
@@ -124,8 +107,34 @@ infoSection.on('blur', '.idea-content', function() {
   parsedObject.body = newBody;
   var stringifyObject = JSON.stringify(parsedObject)
   var updateLocalStorage = localStorage.setItem(id, stringifyObject);
-//------
-})
+});
+
+infoSection.on('click', '.delete-button', function() {
+  if ($(this).hasClass('delete-button')) {
+    $(this).parents('.idea-box-card').remove();
+  }
+  localStorage.removeItem($(this).parents('.idea-box-card').attr('id'));
+});
+
+searchInput.on('keyup', function() {
+  var search = $(this).val();
+  // $.extend($.expr[":"], {
+  //   "contains": function(elem, i, match, array) {
+  //     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+  //   }
+  // });
+  $('h2:contains(' + search + ')').closest('.idea-box-card').show();
+  $('h2:not(:contains(' + search + '))').closest('.idea-box-card').hide();
+  $('p:contains(' + search + ')').closest('.idea-box-card').show();
+  $('p:not(:contains(' + search + ')').closest('.idea-box-card').hide();
+});
+
+searchInput.on('blur', function(event) {
+  location.reload(event);
+});
+
+
+
 
 
 
