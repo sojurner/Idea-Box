@@ -9,6 +9,14 @@ var ideaBoxCard = $('.idea-box-card');
 
 $(window).on('load', persistFromStorage);
 
+function persistFromStorage() {
+  for(var i = 0; i < localStorage.length; i++) {
+    var retrieveStorageData = localStorage.getItem(localStorage.key(i))
+    var parseLocalData = JSON.parse(retrieveStorageData);
+    prependCard(parseLocalData);
+  }
+}
+
 function Idea(title, body, id, quality) {
   this.title = title;
   this.body = body;
@@ -16,19 +24,24 @@ function Idea(title, body, id, quality) {
   this.quality = quality || 'swill';
 }
 
-titleInput.on('input', function() {
-  if ($(this) !== '') {
-    saveButton.removeAttr('disabled')
-  } 
-});
+titleInput.on('keyup', enableButton);
 
-saveButton.on('click', function(event) {
+function enableButton(event) {
+  event.preventDefault();
+  if (titleInput.val.length !== 0 && bodyInput.val !== 0) {
+    saveButton.prop('disabled', false)
+  } 
+};
+
+saveButton.on('click', createSendCard)
+
+function createSendCard(event) {
   event.preventDefault();
   var id = Date.now();  
   var newCard = new Idea(titleInput.val(), bodyInput.val(), id, null);
   localStorage.setItem(id, JSON.stringify(newCard));
   prependCard(newCard);
-});
+};
 
 function prependCard(object) {
   var ideaCard =
@@ -47,17 +60,11 @@ function prependCard(object) {
     <hr>
     </article>`;
   searchInput.after(ideaCard);
-};
-
-function persistFromStorage() {
-  for(var i = 0; i < localStorage.length; i++) {
-    var retrieveStorageData = localStorage.getItem(localStorage.key(i))
-    var parseLocalData = JSON.parse(retrieveStorageData);
-    prependCard(parseLocalData);
-  }
 }
 
-infoSection.on('click', '.up-arrow-button', function() {
+infoSection.on('click', '.up-arrow-button', upVoteRating);
+
+function upVoteRating() {
   var upToRating = $(this).closest('.idea-box-card').find('.quality-rating');
   if (upToRating.text() === 'swill') {
     upToRating.text('plausible');
@@ -71,9 +78,11 @@ infoSection.on('click', '.up-arrow-button', function() {
   parseObject.quality = updateRating;
   var stringifyData = JSON.stringify(parseObject);
   var setObject = localStorage.setItem(id, stringifyData);
-});
+}
 
-infoSection.on('click', '.down-arrow-button', function() {
+infoSection.on('click', '.down-arrow-button', downVoteRating) 
+
+function downVoteRating() {
   var downToRating = $(this).closest('.idea-box-card').find('.quality-rating'); 
   if (downToRating.text() === 'genius') {  
     downToRating.text('plausible');
@@ -87,9 +96,11 @@ infoSection.on('click', '.down-arrow-button', function() {
   parseObject.quality = updateRating;
   var stringifyData = JSON.stringify(parseObject);
   var setObject = localStorage.setItem(id, stringifyData);
-});
+};
 
-infoSection.on('blur', '.card-title', function() {
+infoSection.on('blur', '.card-title', titleEdit)
+
+function titleEdit() {
   var id = $(this).closest('article').attr('id')
   var retrieveObject = localStorage.getItem(id);
   var parsedObject = JSON.parse(retrieveObject);
@@ -97,9 +108,11 @@ infoSection.on('blur', '.card-title', function() {
   parsedObject.title = newTitle;
   var stringifyObject = JSON.stringify(parsedObject)
   var updateLocalStorage = localStorage.setItem(id, stringifyObject);
-});
+}
 
-infoSection.on('blur', '.idea-content', function() {
+infoSection.on('blur', '.idea-content', bodyEdit);
+
+function bodyEdit() {
   var id = $(this).closest('article').attr('id')
   var retrieveObject = localStorage.getItem(id);
   var parsedObject = JSON.parse(retrieveObject);
@@ -107,16 +120,20 @@ infoSection.on('blur', '.idea-content', function() {
   parsedObject.body = newBody;
   var stringifyObject = JSON.stringify(parsedObject)
   var updateLocalStorage = localStorage.setItem(id, stringifyObject);
-});
+}
 
-infoSection.on('click', '.delete-button', function() {
+infoSection.on('click', '.delete-button', removeCard)
+
+function removeCard() {
   if ($(this).hasClass('delete-button')) {
     $(this).parents('.idea-box-card').remove();
   }
   localStorage.removeItem($(this).parents('.idea-box-card').attr('id'));
-});
+}
 
-searchInput.on('keyup', function() {
+searchInput.on('keyup', searchContent)
+
+function searchContent() {
   var search = $(this).val();
   // $.extend($.expr[":"], {
   //   "contains": function(elem, i, match, array) {
@@ -127,8 +144,8 @@ searchInput.on('keyup', function() {
   $('h2:not(:contains(' + search + '))').closest('.idea-box-card').hide();
   $('p:contains(' + search + ')').closest('.idea-box-card').show();
   $('p:not(:contains(' + search + ')').closest('.idea-box-card').hide();
-});
+}
 
 searchInput.on('blur', function(event) {
   location.reload(event);
-});
+})
