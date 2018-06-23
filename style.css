@@ -120,20 +120,6 @@ input[type="text"] {
   }
 }
 
-.fade-out {
-  animation: fadeOut 2s;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 .card-title {
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
