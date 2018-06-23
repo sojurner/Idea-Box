@@ -64,6 +64,10 @@ input {
   width: 40rem;
 }
 
+input:hover {
+  border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9 !important;
+  box-shadow: 2px 2px #a0a0a0
+}
 #search-input-box {
   height: 2.5rem;
   margin: 2rem auto;
@@ -73,7 +77,7 @@ input {
 input::-webkit-input-placeholder {
   color: #B5B6B8;
   font-size: 25px;
-  padding: 10px 0 0 .4rem;
+  padding: 10px 0 0 0;
   text-align: top;
 }
 
@@ -84,7 +88,8 @@ input[type="text"] {
 
 .save-button {
   background-color: #00A79D;
-  font-size: 20px;
+  color: #fff;
+  font-size: 24px;
   height: 2.8rem;
   margin: .5rem auto;
   width: 40.7rem;
@@ -99,6 +104,34 @@ input[type="text"] {
   margin: 1rem auto;
   text-align: left;
   width: 40rem;
+}
+
+.fade-in {
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 2s;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .card-title {
