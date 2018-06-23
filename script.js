@@ -10,142 +10,110 @@ var ideaBoxCard = $('.idea-box-card');
 $(window).on('load', persistFromStorage);
 
 function persistFromStorage() {
-  for(var i = 0; i < localStorage.length; i++) {
-    var retrieveStorageData = localStorage.getItem(localStorage.key(i))
-    var parseLocalData = JSON.parse(retrieveStorageData);
-    prependCard(parseLocalData);
-  }
+    for(var i = 0; i < localStorage.length; i++) {
+      var retrieveStorageData = localStorage.getItem(localStorage.key(i))
+      var parseLocalData = JSON.parse(retrieveStorageData);
+      prependCard(parseLocalData);
+ }
 }
 
 function Idea(title, body, id, quality) {
   this.title = title;
   this.body = body;
   this.id = id;
-  this.quality = quality || 'swill';
+  this.quality = quality || 'Swill';
 }
 
 titleInput.on('keyup', enableButton);
+bodyInput.on('keyup', enableButton);
 
 function enableButton(event) {
   event.preventDefault();
-  if (titleInput.val.length !== 0 && bodyInput.val !== 0) {
-    saveButton.prop('disabled', false)
-  } 
-};
+  titleInput.val() === '' || bodyInput.val() === '' ? saveButton.prop('disabled', true) : saveButton.prop('disabled', false)
+}
 
-saveButton.on('click', createSendCard)
+saveButton.on('click', createSendCard);
 
 function createSendCard(event) {
   event.preventDefault();
-  var id = Date.now();  
+  var id = Date.now();
   var newCard = new Idea(titleInput.val(), bodyInput.val(), id, null);
   localStorage.setItem(id, JSON.stringify(newCard));
   prependCard(newCard);
+  titleInput.val('').focus();
+  bodyInput.val('');
 };
 
-function prependCard(object) {
+function prependCard(idea) {
   var ideaCard =
-  `<article class="idea-box-card" id="${object.id}">
+  `<article class="idea-box-card fade-in" id="${idea.id}">
     <header class ="card-header">
-      <h2 class="card-title" contenteditable="true">${object.title}
+      <h2 class="card-title" contenteditable="true">${idea.title}
         <span>
           <button class="delete-button"></button>
         </span>
       </h2>
     </header>
-    <p class="idea-content" contenteditable="true">${object.body}</p>
+    <p class="idea-content" contenteditable="true">${idea.body}</p>
     <button id="upvote" class="up-arrow-button"></button>
     <button id="downvote" class="down-arrow-button" aria 'label'></button>
-    <p class="quality-title">quality: <p class="quality-rating">${object.quality}</p></p>
+    <p class="quality-title">Quality : <p class="quality-rating">${idea.quality}</p></p>
     <hr>
     </article>`;
-  searchInput.after(ideaCard);
+  infoSection.prepend(ideaCard);
 }
 
-infoSection.on('click', '.up-arrow-button', upVoteRating);
+infoSection.on('click', ('.up-arrow-button, .down-arrow-button'), changeRating);
 
-function upVoteRating() {
-  var upToRating = $(this).closest('.idea-box-card').find('.quality-rating');
-  if (upToRating.text() === 'swill') {
-    upToRating.text('plausible');
-  } else if (upToRating.text() === 'plausible') {
-    upToRating.text('genius');
-  }
-  var id = $(this).closest('article').attr('id')
-  var getObject = localStorage.getItem(id);
-  var parseObject = JSON.parse(getObject);
-  var updateRating = upToRating.text();
-  parseObject.quality = updateRating;
-  var stringifyData = JSON.stringify(parseObject);
-  var setObject = localStorage.setItem(id, stringifyData);
+function changeRating() {
+  var editRating = $(this).closest('.idea-box-card').find('.quality-rating');
+  if($(this).hasClass('up-arrow-button')) {
+    editRating.text() === 'Swill' ? editRating.text('Plausible') : editRating.text('Genius')
+  } else {
+    editRating.text() === 'Genius' ? editRating.text('Plausible') : editRating.text('Swill')
+  } 
+  var id = $(this).closest('article').attr('id');
+  var parseLocal = JSON.parse(localStorage.getItem(id));
+  parseLocal.quality = editRating.text();
+  var setObject = localStorage.setItem(id, JSON.stringify(parseLocal));
 }
 
-infoSection.on('click', '.down-arrow-button', downVoteRating) 
+infoSection.on('blur', ('.card-title, .idea-content'), contentEdit)
 
-function downVoteRating() {
-  var downToRating = $(this).closest('.idea-box-card').find('.quality-rating'); 
-  if (downToRating.text() === 'genius') {  
-    downToRating.text('plausible');
-  } else if (downToRating.text() === 'plausible') {
-    downToRating.text('swill');
-  }
-  var id = $(this).closest('article').attr('id')
-  var getObject = localStorage.getItem(id);
-  var parseObject = JSON.parse(getObject);
-  var updateRating = downToRating.text();
-  parseObject.quality = updateRating;
-  var stringifyData = JSON.stringify(parseObject);
-  var setObject = localStorage.setItem(id, stringifyData);
-};
-
-infoSection.on('blur', '.card-title', titleEdit)
-
-function titleEdit() {
-  var id = $(this).closest('article').attr('id')
-  var retrieveObject = localStorage.getItem(id);
-  var parsedObject = JSON.parse(retrieveObject);
-  var newTitle = $(this).text();
-  parsedObject.title = newTitle;
-  var stringifyObject = JSON.stringify(parsedObject)
-  var updateLocalStorage = localStorage.setItem(id, stringifyObject);
+function contentEdit() {
+  var id = $(this).closest('article').attr('id');
+  let parsedLocal = JSON.parse(localStorage.getItem(id));
+  let newContent = $(this).text();
+  $(this).hasClass('card-title') ? parsedLocal.title = newContent : parsedObject.body = newContent;
+  updateLocalStorage = localStorage.setItem(id, JSON.stringify(parsedLocal));
 }
 
-infoSection.on('blur', '.idea-content', bodyEdit);
-
-function bodyEdit() {
-  var id = $(this).closest('article').attr('id')
-  var retrieveObject = localStorage.getItem(id);
-  var parsedObject = JSON.parse(retrieveObject);
-  var newBody = $(this).text();
-  parsedObject.body = newBody;
-  var stringifyObject = JSON.stringify(parsedObject)
-  var updateLocalStorage = localStorage.setItem(id, stringifyObject);
-}
-
-infoSection.on('click', '.delete-button', removeCard)
+infoSection.on('click', '.delete-button', removeCard);
 
 function removeCard() {
-  if ($(this).hasClass('delete-button')) {
-    $(this).parents('.idea-box-card').remove();
-  }
-  localStorage.removeItem($(this).parents('.idea-box-card').attr('id'));
+  var cardRemoval = $(this).parents('.idea-box-card')
+  cardRemoval.fadeOut(500);
+  localStorage.removeItem(cardRemoval.attr('id'));
 }
 
-searchInput.on('keyup', searchContent)
+searchInput.on('input', searchContent);
 
 function searchContent() {
-  var search = $(this).val();
-  // $.extend($.expr[":"], {
-  //   "contains": function(elem, i, match, array) {
-  //     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-  //   }
-  // });
-  $('h2:contains(' + search + ')').closest('.idea-box-card').show();
-  $('h2:not(:contains(' + search + '))').closest('.idea-box-card').hide();
-  $('p:contains(' + search + ')').closest('.idea-box-card').show();
-  $('p:not(:contains(' + search + ')').closest('.idea-box-card').hide();
+  var ideaArray = [];
+  for(var i = 0; i < localStorage.length; i++) {
+    var parseLocalData = JSON.parse(localStorage.getItem(localStorage.key(i)));
+    ideaArray.push(parseLocalData);
+  };
+  filterIdeas(ideaArray);
 }
 
-searchInput.on('blur', function(event) {
-  location.reload(event);
-})
+function filterIdeas(ideasArray) {
+  var searchIdea = searchInput.val().toUpperCase();
+  var filteredIdea = ideasArray.filter(idea => {
+    return idea.body.toUpperCase().includes(searchIdea) || idea.title.toUpperCase().includes(searchIdea) 
+  })
+  infoSection.empty()
+  filteredIdea.forEach(function(idea){
+    prependCard(idea)
+  })
+}

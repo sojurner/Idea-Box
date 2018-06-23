@@ -14,14 +14,16 @@
     <header>
     <h1 class="idea-box-title">idea<span class="box-title">box</span></h1>
     <header>
-    <form class="title-body-form">
-      <input type="text" name="Title" id="title-input-box" placeholder="Title" aria-label="Idea Title" required>
-      <input type="text" name="Body" id="body-input-box" placeholder="Body" aria-label=" Idea Body Content" required>
-      <button type="submit" class="save-button" aria-label="Submit Idea" disabled>save</button>
+    <form class="title-body-form" aria-label="input title fields for title and body of idea and submit button to create idea card">
+      <input type="text" name="Title" class="input" id="title-input-box" placeholder="Title" aria-label="Idea Title" required>
+      <input type="text" name="Body" class="input" id="body-input-box" placeholder="Body" aria-label="Idea Body Content" required>
+      <button type="submit" class="save-button" aria-label="Submit Idea" disabled>s a v e</button>
     </form>
   </section>
+  <form class="search-box input" aria-label="search input box for specific ideas">
+  <input type="text" name="Search" id="search-input-box" placeholder="Search" aria-label="Search Idea Box" required> 
+  </form>
   <section class="information-section">
-    <input type="text" name="Search" id="search-input-box" placeholder="Search" aria-label="Search Idea Box" required>
   </section>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
