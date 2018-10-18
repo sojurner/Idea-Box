@@ -1,8 +1,8 @@
 # Idea-Box
 
-Save your Amazing Ideas.  Rate and track.
+#### Save your Amazing Ideas.  Rate and track.
 
-Built using Jquery | HTML/CSS
+###### Built using Jquery | HTML/CSS
 
 [GH pages link](https://sojurner.github.io/Idea-Box/)
 
