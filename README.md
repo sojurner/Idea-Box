@@ -1,16 +1,11 @@
 # Idea-Box
 
-## Jot down ideas and save them.
+Save your Amazing Ideas.  Rate and track.
 
-#### - title input and idea input
+Built using Jquery | HTML/CSS
 
-#### idea card will have the option to:
-#### - Delete idea
-#### - Toggle quality of Idea: Swill | Plausible | Genius
+[GH pages link](https://sojurner.github.io/Idea-Box/)
 
-#### saving idea will store information to localStorage.
-#### Idea will persist on page reload.
-#### Deleted cards will be removed from localStorage.
 
 <img width="1436" alt="screen shot 2018-06-06 at 1 25 30 am" src="https://user-images.githubusercontent.com/35910428/41046215-386bafe2-6967-11e8-8b28-1bf4c9db3ac2.png">
 
